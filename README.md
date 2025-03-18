@@ -1,3 +1,6 @@
+## RankNation Sports Statistics Website
+Group 1: Alexander Carr, Omair Durrani, Ryan Karl, and Benjamin Ward
+
 ## Purpose
 RankNation is designed to provide sports fans with a clean, intuitive platform to quickly access
 current standings and breaking news across multiple major sports leagues. The primary goal is to
