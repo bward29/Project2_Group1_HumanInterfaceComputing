@@ -1,79 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RankNation</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <header>
-    <img src="Images/Logo.png" alt="Rank Nation Logo" class="logo" />
-    <nav>
-      <ul class="navbar">
-        <li>Home</li>
-        <li>News</li>
-        <li><a href="NFL.html">NFL</a></li>
-        <li><a href="NBA.html">NBA</a></li>
-        <li class="active">MLB</li>
-        <li>LaLiga</li>
-        <li>Premier League</li>
-      </ul>
-    </nav>
-    <p class="note">*W–L*<br>As of 3/4/25</p>
-  </header>
-
-  <main>
-    <section class="conference">
-      <h2>American League</h2>
-      <ul>
-        <li>New York Yankees <span>94-68</span></li>
-        <li>Cleveland Guardians <span>92-69</span></li>
-        <li>Baltimore Orioles <span>91-71</span></li>
-        <li>Houston Astros <span>88-73</span></li>
-        <li>Kansas City Royals <span>86-76</span></li>
-        <li>Detroit Tigers <span>86-76</span></li>
-        <li>Seattle Mariners <span>85-77</span></li>
-        <li>Minnesota Twins <span>82-80</span></li>
-        <li>Boston Red Sox <span>81-81</span></li>
-        <li>Tampa Bay Rays <span>80-82</span></li>
-        <li>Texas Rangers <span>78-84</span></li>
-        <li>Toronto Blue Jays <span>74-88</span></li>
-        <li>Oakland Athletics <span>69-93</span></li>
-        <li>Los Angeles Angels <span>63-99</span></li>
-        <li>Chicago White Sox <span>41-121</span></li>
-      </ul>
-    </section>
-
-    <div class="loading">
-      <div class="spinner">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+  <div class="container">
+    <header>
+      <div class="mobile-menu">
+        <div class="hamburger-icon"></div>
+        <div class="dropdown-icon"></div>
       </div>
-      <img src="Images/MLB_Logo.png" alt="MLB Logo" class="nfl-logo" />
-    </div>
 
-    <section class="conference">
-      <h2>National League</h2>
-      <ul>
-        <li>Los Angeles Dodgers <span>98-64</span></li>
-        <li>Philadelphia Phillies <span>95-67</span></li>
-        <li>Milwaukee Brewers <span>93-69</span></li>
-        <li>San Diego Padres <span>93-69</span></li>
-        <li>Atlanta Braves <span>89-73</span></li>
-        <li>New York Mets <span>89-73</span></li>
-        <li>Arizona Diamondbacks <span>89-73</span></li>
-        <li>St. Louis Cardinals <span>83-79</span></li>
-        <li>Chicago Cubs <span>83-79</span></li>
-        <li>San Francisco Giants <span>80-82</span></li>
-        <li>Cincinnati Reds <span>77-85</span></li>
-        <li>Pittsburgh Pirates <span>76-86</span></li>
-        <li>Washington Nationals <span>71-91</span></li>
-        <li>Miami Marlins <span>62-100</span></li>
-        <li>Colorado Rockies <span>61-101</span></li>
-      </ul>
-    </section>
-  </main>
-  
+      <img src="Images/Logo.png" alt="Rank Nation Logo" class="logo">
+      <div class="record-display">
+        *W-L*
+        <br>As of 3/4/25
+      </div>
+
+      <div class="navbar-container">
+        <nav>
+          <ul class="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="News.html">News</a></li>
+            <li><a href="NFL.html">NFL</a></li>
+            <li><a href="NBA.html">NBA</a></li>
+            <li><a href="MLB.html">MLB</a></li>
+            <li><a href="LaLiga.html">LaLiga</a></li>
+            <li><a href="PremierLeague.html">Premier League</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="league-container">
+        <div class="conference">
+          <h2>American League</h2>
+          <ul>
+            <li><span>New York Yankees | 94-68</span></li>
+            <li><span>Cleveland Guardians | 92-69</span></li>
+            <li><span>Baltimore Orioles | 91-71</span></li>
+            <li><span>Houston Astros | 88-73</span></li>
+            <li><span>Kansas City Royals | 86-76</span></li>
+            <li><span>Detroit Tigers | 86-76</span></li>
+            <li><span>Seattle Mariners | 85-77</span></li>
+            <li><span>Minnesota Twins | 82-80</span></li>
+            <li><span>Boston Red Sox | 81-81</span></li>
+            <li><span>Tampa Bay Rays | 80-82</span></li>
+            <li><span>Texas Rangers | 78-84</span></li>
+            <li><span>Toronto Blue Jays | 74-88</span></li>
+            <li><span>Oakland Athletics | 69-93</span></li>
+            <li><span>Los Angeles Angels | 63-99</span></li>
+            <li><span>Chicago White Sox | 41-121</span></li>
+          </ul>
+        </div>
+
+        <div class="loading-section">
+          <div class="loading-spinner">
+            <div class="spinner"></div>
+          </div>
+          <div class="loading-text">
+            Loading
+            <br>team
+            <br>standings
+          </div>
+          <img src="Images/MLB_Logo.png" alt="MLB Logo" class="mlb-logo">
+        </div>
+
+        <div class="conference">
+          <h2>National League</h2>
+          <ul>
+            <li><span>Los Angeles Dodgers | 98-64</span></li>
+            <li><span>Philadelphia Phillies | 95-67</span></li>
+            <li><span>Milwaukee Brewers | 93-69</span></li>
+            <li><span>San Diego Padres | 93-69</span></li>
+            <li><span>Atlanta Braves | 89-73</span></li>
+            <li><span>New York Mets | 89-73</span></li>
+            <li><span>Arizona Diamondbacks | 89-73</span></li>
+            <li><span>St. Louis Cardinals | 83-79</span></li>
+            <li><span>Chicago Cubs | 83-79</span></li>
+            <li><span>San Francisco Giants | 80-82</span></li>
+            <li><span>Cincinnati Reds | 77-85</span></li>
+            <li><span>Pittsburgh Pirates | 76-86</span></li>
+            <li><span>Washington Nationals | 71-91</span></li>
+            <li><span>Miami Marlins | 62-100</span></li>
+            <li><span>Colorado Rockies | 61-101</span></li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
 </body>
+
 </html>

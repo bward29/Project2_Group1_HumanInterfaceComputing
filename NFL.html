@@ -1,81 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RankNation</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <header>
-    <img src="Images/Logo.png" alt="Rank Nation Logo" class="logo" />
-    <nav>
-      <ul class="navbar">
-        <li>Home</li>
-        <li>News</li>
-        <li class="active">NFL</li>
-        <li><a href="NBA.html">NBA</a></li>
-        <li><a href="MLB.html">MLB</a></li>
-        <li>LaLiga</li>
-        <li>Premier League</li>
-      </ul>
-    </nav>
-    <p class="note">*W–L*<br>As of 3/4/25</p>
-  </header>
-
-  <main>
-    <section class="conference">
-      <h2>National Football Conference</h2>
-      <ul>
-        <li>Arizona Cardinals <span>8–9</span></li>
-        <li>Atlanta Falcons <span>8–9</span></li>
-        <li>Carolina Panthers <span>5–12</span></li>
-        <li>Chicago Bears <span>5–12</span></li>
-        <li>Dallas Cowboys <span>7–10</span></li>
-        <li>Detroit Lions <span>15–2</span></li>
-        <li>Green Bay Packers <span>11–6</span></li>
-        <li>Los Angeles Rams <span>10–7</span></li>
-        <li>Minnesota Vikings <span>14–3</span></li>
-        <li>New Orleans Saints <span>5–12</span></li>
-        <li>New York Giants <span>3–14</span></li>
-        <li>Philadelphia Eagles <span>14–3</span></li>
-        <li>San Francisco 49ers <span>6–11</span></li>
-        <li>Seattle Seahawks <span>10–7</span></li>
-        <li>Tampa Bay Buccaneers <span>10–7</span></li>
-        <li>Washington Commanders <span>12–5</span></li>
-      </ul>
-    </section>
-
-    <div class="loading">
-      <div class="spinner">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+  <div class="container">
+    <header>
+      <div class="mobile-menu">
+        <div class="hamburger-icon"></div>
+        <div class="dropdown-icon"></div>
       </div>
-      <img src="Images/NFL_Logo.png" alt="NFL Logo" class="nfl-logo" />
-    </div>
 
-    <section class="conference">
-      <h2>American Football Conference</h2>
-      <ul>
-        <li>Baltimore Ravens <span>12–5</span></li>
-        <li>Buffalo Bills <span>13–4</span></li>
-        <li>Cincinnati Bengals <span>9–8</span></li>
-        <li>Cleveland Browns <span>3–14</span></li>
-        <li>Denver Broncos <span>10–7</span></li>
-        <li>Houston Texans <span>10–7</span></li>
-        <li>Indianapolis Colts <span>8–9</span></li>
-        <li>Jacksonville Jaguars <span>4–13</span></li>
-        <li>Kansas City Chiefs <span>15–2</span></li>
-        <li>Las Vegas Raiders <span>4–13</span></li>
-        <li>Los Angeles Chargers <span>11–6</span></li>
-        <li>Miami Dolphins <span>8–9</span></li>
-        <li>New England Patriots <span>4–13</span></li>
-        <li>New York Jets <span>5–12</span></li>
-        <li>Pittsburgh Steelers <span>10–7</span></li>
-        <li>Tennessee Titans <span>3–14</span></li>
-      </ul>
-    </section>
-  </main>
-  
+      <img src="Images/Logo.png" alt="Rank Nation Logo" class="logo">
+      <div class="record-display">
+        *W-L*
+        <br>As of 3/4/25
+      </div>
+
+      <div class="navbar-container">
+        <nav>
+          <ul class="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="News.html">News</a></li>
+            <li><a href="NFL.html">NFL</a></li>
+            <li><a href="NBA.html">NBA</a></li>
+            <li><a href="MLB.html">MLB</a></li>
+            <li><a href="LaLiga.html">LaLiga</a></li>
+            <li><a href="PremierLeague.html">Premier League</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="league-container">
+        <div class="conference">
+          <h2>National Football Conference</h2>
+          <ul>
+            <li><span>Arizona Cardinals</span> <span>8-9</span></li>
+            <li><span>Atlanta Falcons</span> <span>8-9</span></li>
+            <li><span>Carolina Panthers</span> <span>5-12</span></li>
+            <li><span>Chicago Bears</span> <span>5-12</span></li>
+            <li><span>Dallas Cowboys</span> <span>7-10</span></li>
+            <li><span>Detroit Lions</span> <span>15-2</span></li>
+            <li><span>Green Bay Packers</span> <span>11-6</span></li>
+            <li><span>Los Angeles Rams</span> <span>10-7</span></li>
+            <li><span>Minnesota Vikings</span> <span>14-3</span></li>
+            <li><span>New Orleans Saints</span> <span>5-12</span></li>
+            <li><span>New York Giants</span> <span>3-14</span></li>
+            <li><span>Philadelphia Eagles</span> <span>14-3</span></li>
+            <li><span>San Francisco 49ers</span> <span>6-11</span></li>
+            <li><span>Seattle Seahawks</span> <span>10-7</span></li>
+            <li><span>Tampa Bay Buccaneers</span> <span>10-7</span></li>
+            <li><span>Washington Commanders</span> <span>12-5</span></li>
+          </ul>
+        </div>
+
+        <div class="loading-section">
+          <div class="loading-spinner">
+            <div class="spinner"></div>
+          </div>
+          <div class="loading-text">
+            Loading
+            <br>team
+            <br>standings
+          </div>
+          <img src="Images/NFL_Logo.png" alt="NFL Logo" class="nfl-logo">
+        </div>
+
+        <div class="conference">
+          <h2>American Football Conference</h2>
+          <ul>
+            <li><span>Baltimore Ravens</span> <span>12-5</span></li>
+            <li><span>Buffalo Bills</span> <span>13-4</span></li>
+            <li><span>Cincinnati Bengals</span> <span>9-8</span></li>
+            <li><span>Cleveland Browns</span> <span>3-14</span></li>
+            <li><span>Denver Broncos</span> <span>10-7</span></li>
+            <li><span>Houston Texans</span> <span>10-7</span></li>
+            <li><span>Indianapolis Colts</span> <span>8-9</span></li>
+            <li><span>Jacksonville Jaguars</span> <span>4-13</span></li>
+            <li><span>Kansas City Chiefs</span> <span>15-2</span></li>
+            <li><span>Las Vegas Raiders</span> <span>4-13</span></li>
+            <li><span>Los Angeles Chargers</span> <span>11-6</span></li>
+            <li><span>Miami Dolphins</span> <span>8-9</span></li>
+            <li><span>New England Patriots</span> <span>4-13</span></li>
+            <li><span>New York Jets</span> <span>5-12</span></li>
+            <li><span>Pittsburgh Steelers</span> <span>10-7</span></li>
+            <li><span>Tennessee Titans</span> <span>3-14</span></li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
 </body>
+
 </html>

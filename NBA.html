@@ -1,79 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RankNation</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <header>
-    <img src="Images/Logo.png" alt="Rank Nation Logo" class="logo" />
-    <nav>
-      <ul class="navbar">
-        <li>Home</li>
-        <li>News</li>
-        <li><a href="NFL.html">NFL</a></li>
-        <li class="active">NBA</li>
-        <li><a href="MLB.html">MLB</a></li>
-        <li>LaLiga</li>
-        <li>Premier League</li>
-      </ul>
-    </nav>
-    <p class="note">*W–L*<br>As of 3/4/25</p>
-  </header>
-
-  <main>
-    <section class="conference">
-      <h2>Eastern Conference</h2>
-      <ul>
-        <li>Cleveland Cavaliers <span>50-10</span></li>
-        <li>Boston Celtics <span>43-18</span></li>
-        <li>New York Knicks <span>40-20</span></li>
-        <li>Milwaukee Bucks <span>34-25</span></li>
-        <li>Indiana Pacers <span>34-25</span></li>
-        <li>Detroit Pistons <span>35-27</span></li>
-        <li>Miami Heat <span>29-31</span></li>
-        <li>Orlando Magic <span>29-33</span></li>
-        <li>Atlanta Hawks <span>28-33</span></li>
-        <li>Chicago Bulls <span>24-37</span></li>
-        <li>Brooklyn Nets <span>21-39</span></li>
-        <li>Philadelphia 76ers <span>21-39</span></li>
-        <li>Toronto Rapters <span>19-42</span></li>
-        <li>Charlotte Hornets <span>14-46</span></li>
-        <li>Washington Wizards <span>11-49</span></li>
-      </ul>
-    </section>
-
-    <div class="loading">
-      <div class="spinner">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+  <div class="container">
+    <header>
+      <div class="mobile-menu">
+        <div class="hamburger-icon"></div>
+        <div class="dropdown-icon"></div>
       </div>
-      <img src="Images/NBA_Logo.png" alt="NBA Logo" class="nfl-logo" />
-    </div>
 
-    <section class="conference">
-      <h2>Western Conference</h2>
-      <ul>
-        <li>Oklahoma City Thunder <span>50-11</span></li>
-        <li>Los Angeles Lakers <span>38-21</span></li>
-        <li>Denver Nuggets <span>39-22</span></li>
-        <li>Memphis Grizzlies <span>38-23</span></li>
-        <li>Houston Rockets <span>37-24</span></li>
-        <li>Golden State Warriors <span>33-28</span></li>
-        <li>Los Angeles Clippers <span>32-28</span></li>
-        <li>Sacramento Kings <span>32-28</span></li>
-        <li>Minnesota Timberwolves <span>33-29</span></li>
-        <li>Dallas Mavericks <span>32-30</span></li>
-        <li>Phoenix Suns <span>28-33</span></li>
-        <li>Portland Trail Blazers <span>28-34</span></li>
-        <li>San Antonio Spurs <span>25-34</span></li>
-        <li>New Orleans Pelicans <span>17-44</span></li>
-        <li>Utah Jazz <span>15-46</span></li>
-      </ul>
-    </section>
-  </main>
-  
+      <img src="Images/Logo.png" alt="Rank Nation Logo" class="logo">
+      <div class="record-display">
+        *W-L*
+        <br>As of 3/4/25
+      </div>
+
+      <div class="navbar-container">
+        <nav>
+          <ul class="navbar">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="News.html">News</a></li>
+            <li><a href="NFL.html">NFL</a></li>
+            <li><a href="NBA.html">NBA</a></li>
+            <li><a href="MLB.html">MLB</a></li>
+            <li><a href="LaLiga.html">LaLiga</a></li>
+            <li><a href="PremierLeague.html">Premier League</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="league-container">
+        <div class="conference">
+          <h2>Eastern Conference</h2>
+          <ul>
+            <li><span>Cleveland Cavaliers | 50-10</span></li>
+            <li><span>Boston Celtics | 43-18</span></li>
+            <li><span>New York Knicks | 40-20</span></li>
+            <li><span>Milwaukee Bucks | 34-25</span></li>
+            <li><span>Indiana Pacers | 34-25</span></li>
+            <li><span>Detroit Pistons | 35-27</span></li>
+            <li><span>Miami Heat | 29-31</span></li>
+            <li><span>Orlando Magic | 29-33</span></li>
+            <li><span>Atlanta Hawks | 28-33</span></li>
+            <li><span>Chicago Bulls | 24-37</span></li>
+            <li><span>Brooklyn Nets | 21-39</span></li>
+            <li><span>Philadelphia 76ers | 21-39</span></li>
+            <li><span>Toronto Raptors | 19-42</span></li>
+            <li><span>Charlotte Hornets | 14-46</span></li>
+            <li><span>Washington Wizards | 11-49</span></li>
+          </ul>
+        </div>
+
+        <div class="loading-section">
+          <div class="loading-spinner">
+            <div class="spinner"></div>
+          </div>
+          <div class="loading-text">
+            Loading
+            <br>team
+            <br>standings
+          </div>
+          <img src="Images/NBA_Logo.png" alt="NBA Logo" class="nba-logo">
+        </div>
+
+        <div class="conference">
+          <h2>Western Conference</h2>
+          <ul>
+            <li><span>Oklahoma City Thunder | 50-11</span></li>
+            <li><span>Los Angeles Lakers | 38-21</span></li>
+            <li><span>Denver Nuggets | 39-22</span></li>
+            <li><span>Memphis Grizzlies | 38-23</span></li>
+            <li><span>Houston Rockets | 37-24</span></li>
+            <li><span>Golden State Warriors | 33-28</span></li>
+            <li><span>Los Angeles Clippers | 32-28</span></li>
+            <li><span>Sacramento Kings | 32-28</span></li>
+            <li><span>Minnesota Timberwolves | 33-29</span></li>
+            <li><span>Dallas Mavericks | 32-30</span></li>
+            <li><span>Phoenix Suns | 28-33</span></li>
+            <li><span>Portland Trail Blazers | 28-34</span></li>
+            <li><span>San Antonio Spurs | 25-34</span></li>
+            <li><span>New Orleans Pelicans | 17-44</span></li>
+            <li><span>Utah Jazz | 15-46</span></li>
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
 </body>
+
 </html>
