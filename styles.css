@@ -1,4 +1,3 @@
-/* Mobile menu */
 .mobile-menu {
   display: none;
   position: absolute;
@@ -50,7 +49,6 @@
   transform: rotate(90deg);
 }
 
-/* Record display */
 .record-display {
   position: absolute;
   top: 12px;
@@ -62,7 +60,6 @@
   background-color: white;
 }
 
-/* League container */
 .league-container {
   display: flex;
   justify-content: space-between;
@@ -103,7 +100,6 @@
   border-bottom: none;
 }
 
-/* Loading section */
 .loading-section {
   display: flex;
   flex-direction: column;
@@ -136,7 +132,6 @@
   margin-top: 20px;
 }
 
-/* News page specific */
 .news-page {
   max-width: 1000px;
   margin: 0 auto;
@@ -187,7 +182,6 @@ select {
   position: relative;
 }
 
-/* Header Styles */
 header {
   display: flex;
   flex-direction: column;
@@ -238,7 +232,6 @@ header {
   width: 100px;
 }
 
-/* Loading indicator */
 .loading-indicator {
   position: absolute;
   top: 150px;
@@ -265,7 +258,6 @@ header {
   }
 }
 
-/* News Section */
 .news-headline-container {
   display: flex;
   justify-content: center;
@@ -321,7 +313,6 @@ header {
   margin-left: 472px;
 }
 
-/* Media Queries */
 @media screen and (max-width: 1200px) {
   .news-item {
     align-items: center;
