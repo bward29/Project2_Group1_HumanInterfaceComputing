@@ -1,33 +1,31 @@
-// Immediately hide any unwanted navigation
 (function() {
-    // Hide all bullet lists in top locations
     const bulletLists = document.querySelectorAll('body > ul, header > ul, .container > ul, body > li, header > li, .container > li');
     bulletLists.forEach(list => {
         list.style.display = 'none';
     });
 })();
 
-// Hide any existing navigation elements when DOM is fully loaded
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Force hide all navigation bars
+    
     const navbars = document.querySelectorAll('.navbar-container, .navbar, .mobile-menu');
     navbars.forEach(nav => {
         nav.style.display = 'none';
     });
 
-    // Force hide any bullet lists at the root level
+    
     const bulletLists = document.querySelectorAll('body > ul, header > ul, .container > ul, body > li, header > li, .container > li');
     bulletLists.forEach(list => {
         list.style.display = 'none';
     });
 
-    // Ensure hamburger menu is visible
+    
     const hamburger = document.querySelector('.hamburger-menu');
     if (hamburger) {
         hamburger.style.display = 'block';
     }
 
-    // Set up menu items animation
+   
     const menuItems = document.querySelectorAll('.dropdown-menu li');
     menuItems.forEach((item, index) => {
         item.style.transitionDelay = (index * 0.05) + 's';
@@ -35,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
         item.style.transform = 'translateX(-10px)';
     });
     
-    // Listen for menu open and animate items
+  
     const dropdownMenu = document.getElementById('dropdownMenu');
     if (dropdownMenu) {
         dropdownMenu.addEventListener('animationend', function() {
@@ -56,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Toggle the menu open/closed
+
 function toggleMenu() {
     const dropdownMenu = document.getElementById('dropdownMenu');
     const hamburgerMenu = document.querySelector('.hamburger-menu');
@@ -66,7 +64,7 @@ function toggleMenu() {
     }
 }
 
-// Close the dropdown if user clicks outside of it
+
 window.onclick = function(event) {
     if (!event.target.matches('.hamburger-icon') && 
         !event.target.matches('.hamburger-menu')) {
