@@ -1,0 +1,173 @@
+.mobile-menu, 
+.hamburger-icon:before, 
+.hamburger-icon:after, 
+.dropdown-icon, 
+.dropdown-icon:before,
+.navbar-container {
+    display: none !important;
+}
+
+body > ul, 
+header > ul,
+.container > ul,
+body > li,
+header > li,
+.container > li {
+    display: none !important;
+}
+
+
+.hamburger-menu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    cursor: pointer;
+    display: block !important;
+    background-color: #0091ea;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    width: auto;
+    height: auto;
+}
+
+.hamburger-menu:hover {
+    background-color: #00b0ff;
+    transform: scale(1.05);
+}
+
+.hamburger-menu span.hamburger-icon {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background-color: white;
+    margin: 6px 0;
+    transition: 0.4s;
+    border-radius: 2px;
+    position: relative;
+}
+
+
+.hamburger-menu span.hamburger-icon::before,
+.hamburger-menu span.hamburger-icon::after {
+    display: none !important;
+}
+
+.hamburger-menu.active span.hamburger-icon:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger-menu.active span.hamburger-icon:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-menu.active span.hamburger-icon:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+
+.hamburger-menu.active {
+    background-color: #0078c1;
+}
+
+
+.dropdown-menu {
+    position: fixed;
+    top: 70px;
+    left: 15px;
+    background-color: white;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    padding: 8px 0;
+    min-width: 220px;
+    z-index: 999;
+    display: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.dropdown-menu ul {
+    list-style-type: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+}
+
+.dropdown-menu.show {
+    display: block;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-15px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.dropdown-menu li {
+    padding: 0;
+    margin: 2px 5px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: block !important;
+}
+
+.dropdown-menu li:last-child {
+    border-bottom: none;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: #333 !important; 
+    font-weight: 500;
+    display: block;
+    transition: all 0.3s ease;
+    padding: 14px 20px;
+    border-left: 4px solid transparent;
+    position: relative;
+    font-size: 16px;
+}
+
+.dropdown-menu li a:hover {
+    color: #0091ea !important;
+    text-decoration: none;
+    font-weight: 600;
+    background-color: #f0f9ff;
+    border-left: 4px solid #0091ea;
+}
+
+.dropdown-menu li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 10px;
+    left: 20px;
+    background-color: #0091ea;
+    transition: width 0.3s ease;
+}
+
+.dropdown-menu li a:hover::after {
+    width: 50%;
+}
+
+.league-icon {
+    float: right;
+    font-size: 18px;
+    opacity: 0.8;
+    margin-left: 10px;
+}
+
+.dropdown-menu::before {
+    content: 'MENU';
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: #0091ea;
+    letter-spacing: 2px;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #e0e0e0;
+}

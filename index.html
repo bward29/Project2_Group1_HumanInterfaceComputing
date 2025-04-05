@@ -6,11 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RankNation</title>
     <link rel="stylesheet" href="styles.css" />
+    
+    <link rel="stylesheet" href="hamburger-menu.css" />
 </head>
 
 <body>
     <div class="container">
         <header>
+            
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <span class="hamburger-icon"></span>
+                <span class="hamburger-icon"></span>
+                <span class="hamburger-icon"></span>
+            </div>
+
+            
+            <div class="dropdown-menu" id="dropdownMenu">
+                <ul>
+                    <li><a href="index.html">Home <span class="league-icon">🏠</span></a></li>
+                    <li><a href="news.html">News <span class="league-icon">📰</span></a></li>
+                    <li><a href="NFL.html">NFL <span class="league-icon">🏈</span></a></li>
+                    <li><a href="NBA.html">NBA <span class="league-icon">🏀</span></a></li>
+                    <li><a href="MLB.html">MLB <span class="league-icon">⚾</span></a></li>
+                    <li><a href="laliga.html">LaLiga <span class="league-icon">⚽</span></a></li>
+                    <li><a href="premierleague.html">Premier League <span class="league-icon">⚽</span></a></li>
+                </ul>
+            </div>
+
             <img src="Images/Logo.png" alt="Rank Nation Logo" class="logo">
             <div class="loading-indicator">
                 <div class="spinner"></div>
@@ -18,20 +40,6 @@
             <div class="last-updated">
                 Last updated
                 <br>03/04/25
-            </div>
-
-            <div class="navbar-container">
-                <nav>
-                    <ul class="navbar">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="news.html">News</a></li>
-                        <li><a href="NFL.html">NFL</a></li>
-                        <li><a href="NBA.html">NBA</a></li>
-                        <li><a href="MLB.html">MLB</a></li>
-                        <li><a href="laliga.html">LaLiga</a></li>
-                        <li><a href="premierleague.html">Premier League</a></li>
-                    </ul>
-                </nav>
             </div>
         </header>
 
@@ -70,6 +78,9 @@
             </div>
         </main>
     </div>
+
+  
+    <script src="hamburger-menu.js"></script>
 </body>
 
 </html>
