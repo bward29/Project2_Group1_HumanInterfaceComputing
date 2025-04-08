@@ -44,53 +44,100 @@
 
         <main>
             <div class="news-page">
-                <div class="news-section-title">
-                    News
-                </div>
-
-                <div class="news-articles">
-                    <div class="news-item">
-                        <a href="https://www.toledoblade.com/sports/bgsu/2025/03/09/eddie-george-agrees-to-become-bowling-green-football-coach/stories/20250309141"
-                            class="link-text">link</a>
-                        <div class="headline-box">
-                            <strong>Eddie George agrees to become Bowling Green football coach</strong>
-                        </div>
-                        <div class="content-box">
-                            Former Ohio State and NFL star Eddie George has agreed to become the next head football
-                            coach at Bowling Green State University, sources told The Blade on Sunday.
-                        </div>
-                    </div>
-
-                    <div class="news-item">
-                        <a href="https://www.espn.com/nfl/story/_/id/44178418/sources-myles-garrett-browns-agree-record-contract-extension"
-                            class="link-text">link</a>
-                        <div class="headline-box">
-                            <strong>Sources: Myles Garrett, Browns agree to record contract extension</strong>
-                        </div>
-                        <div class="content-box">
-                            The Cleveland Browns and Myles Garrett have agreed on a record contract extension that
-                            averages $40 million per year and includes $123.5 million in guaranteed money, making the
-                            star defensive end the highest-paid non-quarterback in NFL history, sources told ESPN.
-                        </div>
-                    </div>
-
-                    <div class="news-item">
-                        <a href="https://www.barcablaugranes.com/2025/3/9/24381436/la-liga-wrap-barcelona-stay-top-as-atletico-lose-and-real-madrid-beat-rayo"
-                            class="link-text">link</a>
-                        <div class="headline-box">
-                            <strong>Barcelona stay top as Atletico lose and Real Madrid beat Rayo</strong>
-                        </div>
-                        <div class="content-box">
-                            Ángel Correa was then sent off for a nasty challenge, and will now miss next weekend's clash
-                            with Barcelona, before Getafe scored twice late on to secure a precious win.
-                        </div>
-                    </div>
-                </div>
+              <div class="news-section-title">News</div>
+              <!-- The news articles will be dynamically injected into this container -->
+              <div class="news-articles" id="news-articles">
+                <!-- Optionally, you can have placeholder content here -->
+                <p>Loading news...</p>
+              </div>
             </div>
-        </main>
-    </div>
+          </main>
+        </div>
+      
+        <script src="hamburger-menu.js"></script>
+        <!-- API Integration Script -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+              // Replace with your actual API endpoint and API key
+              const apiUrl = 'https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=e82b2543fcf74b63ad167b9e0ef36153';
+              const apiKey = 'Insert API Key Here';
 
-    <script src="hamburger-menu.js"></script>
-</body>
+              const newsArticlesDiv = document.getElementById('news-articles');
+              newsArticlesDiv.innerHTML = '<p>Loading news...</p>';
+          
+              fetch(apiUrl, {
+                  method: 'GET',
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+              })
+              .then(data => {
+                // Clear placeholder content
+                newsArticlesDiv.innerHTML = '';
 
-</html>
+                // Define keywords && blacklist to filter articles
+                const keywords = ['NFL', 'NBA', 'MLB', 'Soccer'];
+                const blacklist = ['NCAA', 'NHL'];
+
+                // Filter articles that contain any of the keywords in the title or description
+                const filteredArticles = data.articles.filter(article => {
+                    return keywords.some(keyword => 
+                    article.title.toLowerCase().includes(keyword.toLowerCase()) ||
+                    (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
+                    );
+                });
+          
+                //Limit to the top 4 articles
+                const topArticles = data.articles.slice(0, 4).filter(article => {
+                    return !blacklist.some(keyword => 
+                    article.title.toLowerCase().includes(keyword.toLowerCase()) ||
+                    (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
+                    );
+                });
+
+                // Loop through the articles and create elements for each
+                topArticles.forEach(article => {
+                    // Create a container for each news item
+                    const newsItem = document.createElement('div');
+                    newsItem.className = 'news-item';
+          
+                    // Create a link element (e.g., for the full article)
+                    const link = document.createElement('a');
+                    link.href = article.url;
+                    link.className = 'link-text';
+                    link.textContent = 'link';
+          
+                    // Create the headline element
+                    const headlineBox = document.createElement('a');
+                    headlineBox.className = 'headline-box';
+                    headlineBox.href = article.url;
+                    headlineBox.innerHTML = `<strong>${article.title}</strong>`;
+          
+                    // Create the content element for the article description
+                    const contentBox = document.createElement('div');
+                    contentBox.className = 'content-box';
+                    contentBox.textContent = article.description;
+
+                    // Append all elements to the news item container
+                    newsItem.appendChild(headlineBox);
+                    newsItem.appendChild(contentBox);
+
+          
+                    // Append the news item to the news container
+                    newsArticlesDiv.appendChild(newsItem);
+                  });
+                  });
+                if (topArticles.length === 0) {
+                    newsArticlesDiv.innerHTML = '<p>No news articles available.</p>';
+                }
+              })
+              .catch(error => {
+                console.error('Error fetching news:', error);
+                newsArticlesDiv.innerHTML = '<p>Failed to load news.</p>';
+              });
+          </script>
+      </body>
+      </html>

@@ -120,14 +120,9 @@
 .nba-logo,
 .mlb-logo,
 .laliga-logo,
+.nfl-logo,
 .premier-league-logo {
   width: 100px;
-  height: auto;
-  margin-top: 20px;
-}
-
-.nfl-logo {
-  width: 60px;
   height: auto;
   margin-top: 20px;
 }
