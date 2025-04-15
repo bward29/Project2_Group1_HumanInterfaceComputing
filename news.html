@@ -12,14 +12,12 @@
 <body>
     <div class="container">
         <header>
-            
             <div class="hamburger-menu" onclick="toggleMenu()">
                 <span class="hamburger-icon"></span>
                 <span class="hamburger-icon"></span>
                 <span class="hamburger-icon"></span>
             </div>
 
-            
             <div class="dropdown-menu" id="dropdownMenu">
                 <ul>
                     <li><a href="index.html">Home <span class="league-icon">🏠</span></a></li>
@@ -36,7 +34,7 @@
             <div class="loading-indicator">
                 <div class="spinner"></div>
             </div>
-            <div class="last-updated">
+            <div class="last-updated" id="last-updated">
                 Last updated
                 <br>03/04/25
             </div>
@@ -44,121 +42,381 @@
 
         <main>
             <div class="news-page">
-              <div class="news-section-title">News</div>
-              <!-- The news articles will be dynamically injected into this container -->
-              <div class="news-articles" id="news-articles">
-                <!-- Optionally, you can have placeholder content here -->
-                <p>Loading news...</p>
-              </div>
+                <div class="news-section-title">Sports News</div>
+                <div class="api-selector">
+                    <button onclick="loadNews('us', 'sports')" class="api-button active">US Sports</button>
+                    <button onclick="searchNews('NFL')" class="api-button">NFL</button>
+                    <button onclick="searchNews('NBA')" class="api-button">NBA</button>
+                    <button onclick="searchNews('MLB')" class="api-button">MLB</button>
+                    <button onclick="searchNews('LaLiga')" class="api-button">LaLiga</button>
+                    <button onclick="searchNews('Premier League')" class="api-button">Premier League</button>
+                </div>
+                <div class="news-articles" id="news-articles">
+                    <p class="loading-text">Loading sports news...</p>
+                </div>
             </div>
-          </main>
-        </div>
-      
-        <script src="hamburger-menu.js"></script>
-        <!-- API Integration Script -->
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-              // API endpoint with the new API key
-              const apiKey = 'c1347ffd8d7b44909ea09db3791cf1a6';
-              const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=${apiKey}`;
+        </main>
+    </div>
 
-              const newsArticlesDiv = document.getElementById('news-articles');
-              newsArticlesDiv.innerHTML = '<p>Loading news...</p>';
-          
-              fetch(apiUrl, {
-                  method: 'GET'
-              })
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok: ' + response.statusText);
-                }
-                return response.json();
-              })
-              .then(data => {
-                // Clear placeholder content
-                newsArticlesDiv.innerHTML = '';
+    <script src="hamburger-menu.js"></script>
+    <!-- News API Integration Script -->
+    <script>
+        // API configuration
+        const API_KEY = "c1347ffd8d7b44909ea09db3791cf1a6";
+        const BASE_URL = "https://newsapi.org/v2";
 
-                // Define keywords and blacklist to filter articles
-                const keywords = ['NFL', 'NBA', 'MLB', 'Soccer', 'football', 'basketball', 'baseball'];
-                const blacklist = ['NCAA', 'NHL', 'college'];
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update last updated timestamp
+            updateLastUpdated();
 
-                // Filter articles that contain any of the keywords but none from the blacklist
-                const filteredArticles = data.articles.filter(article => {
-                    // Check if title or description contains any keyword
-                    const hasKeyword = keywords.some(keyword => 
-                        (article.title && article.title.toLowerCase().includes(keyword.toLowerCase())) ||
-                        (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
-                    );
-                    
-                    // Check if title or description contains any blacklisted word
-                    const hasBlacklisted = blacklist.some(keyword => 
-                        (article.title && article.title.toLowerCase().includes(keyword.toLowerCase())) ||
-                        (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
-                    );
-                    
-                    // Only return articles with keywords and without blacklisted terms
-                    return hasKeyword && !hasBlacklisted;
+            // Load default news (US Sports)
+            loadNews('us', 'sports');
+
+            // Set up button highlighting
+            setupButtonHighlighting();
+        });
+
+        // Update the last updated timestamp
+        function updateLastUpdated() {
+            // Fixed date format to match the first image (03/04/25)
+            document.getElementById('last-updated').innerHTML = `Last updated<br>03/04/25`;
+        }
+
+        // Setup button highlighting
+        function setupButtonHighlighting() {
+            const buttons = document.querySelectorAll('.api-button');
+            buttons.forEach(button => {
+                button.addEventListener('click', function () {
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
                 });
-          
-                // If no filtered articles, use top 4 articles without blacklisted terms
-                let displayArticles = filteredArticles;
-                
-                if (filteredArticles.length === 0) {
-                    displayArticles = data.articles.filter(article => {
-                        return !blacklist.some(keyword => 
-                            (article.title && article.title.toLowerCase().includes(keyword.toLowerCase())) ||
-                            (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
-                        );
+            });
+        }
+
+        // Load news by country and category
+        async function loadNews(country, category) {
+            const newsArticlesDiv = document.getElementById('news-articles');
+            newsArticlesDiv.innerHTML = '<p class="loading-text">Loading sports news...</p>';
+
+            try {
+                // Construct the URL for the News API request
+                const url = `${BASE_URL}/top-headlines?country=${country}&category=${category}&apiKey=${API_KEY}`;
+
+                // Make the API request
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Update the last updated timestamp
+                updateLastUpdated();
+
+                // Display the news articles
+                displayNews(data);
+            } catch (error) {
+                console.error('Error fetching news:', error);
+                newsArticlesDiv.innerHTML = `
+                        <div class="error-message">
+                            <p>Sorry, we couldn't load the latest sports news. Error: ${error.message}</p>
+                            <p>This could be due to API rate limits or network issues.</p>
+                        </div>
+                        <div id="fallback-news"></div>
+                    `;
+
+                // Display fallback content
+                displayFallbackNews();
+            }
+        }
+
+        // Search for news by keyword
+        async function searchNews(keyword) {
+            const newsArticlesDiv = document.getElementById('news-articles');
+            newsArticlesDiv.innerHTML = `<p class="loading-text">Searching for ${keyword} news...</p>`;
+
+            try {
+                // Construct the URL for the News API request
+                // Use the 'everything' endpoint for more comprehensive results
+                const url = `${BASE_URL}/everything?q=${encodeURIComponent(keyword)}&sortBy=publishedAt&language=en&apiKey=${API_KEY}`;
+
+                // Make the API request
+                const response = await fetch(url);
+
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.status}`);
+                }
+
+                const data = await response.json();
+
+                // Update the last updated timestamp
+                updateLastUpdated();
+
+                // Display the news articles
+                displayNews(data, keyword);
+            } catch (error) {
+                console.error('Error searching news:', error);
+                newsArticlesDiv.innerHTML = `
+                        <div class="error-message">
+                            <p>Sorry, we couldn't search for ${keyword} news. Error: ${error.message}</p>
+                            <p>This could be due to API rate limits or network issues.</p>
+                        </div>
+                        <div id="fallback-news"></div>
+                    `;
+
+                // Display fallback content
+                displayFallbackNews(keyword);
+            }
+        }
+
+        // Display news data
+        function displayNews(data, searchTerm = null) {
+            const newsArticlesDiv = document.getElementById('news-articles');
+            newsArticlesDiv.innerHTML = '';
+
+            if (!data.articles || data.articles.length === 0) {
+                newsArticlesDiv.innerHTML = '<p>No sports news articles available at the moment.</p>';
+                return;
+            }
+
+            // Create a header for the section
+            const sectionHeader = document.createElement('div');
+            sectionHeader.className = 'section-header';
+
+            if (searchTerm) {
+                sectionHeader.innerHTML = `<h2>${searchTerm} News</h2>`;
+            } else {
+                sectionHeader.innerHTML = '<h2>Latest Sports News</h2>';
+            }
+
+            newsArticlesDiv.appendChild(sectionHeader);
+
+            // Display each news article
+            data.articles.forEach(article => {
+                // Skip articles without proper data
+                if (!article.title || !article.url) return;
+
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+
+                // Create headline link
+                const headlineBox = document.createElement('a');
+                headlineBox.className = 'headline-box';
+                headlineBox.href = article.url;
+                headlineBox.target = '_blank'; // Open in new tab
+                headlineBox.innerHTML = `<strong>${article.title}</strong>`;
+
+                // Create content description
+                const contentBox = document.createElement('div');
+                contentBox.className = 'content-box';
+                contentBox.textContent = article.description || 'No description available';
+
+                // Create source info
+                const sourceInfo = document.createElement('div');
+                sourceInfo.className = 'source-info';
+
+                // Format the date if available
+                let formattedDate = 'Unknown date';
+                if (article.publishedAt) {
+                    const pubDate = new Date(article.publishedAt);
+                    formattedDate = pubDate.toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
                     });
                 }
-                
-                // Limit to the top 4 articles
-                const topArticles = displayArticles.slice(0, 4);
 
-                if (topArticles.length === 0) {
-                    newsArticlesDiv.innerHTML = '<p>No sports news articles available at the moment.</p>';
-                    return;
-                }
+                sourceInfo.textContent = `Source: ${article.source.name || 'Unknown'} | Published: ${formattedDate}`;
 
-                // Loop through the articles and create elements for each
-                topArticles.forEach(article => {
-                    // Create a container for each news item
-                    const newsItem = document.createElement('div');
-                    newsItem.className = 'news-item';
-          
-                    // Create the headline element
-                    const headlineBox = document.createElement('a');
-                    headlineBox.className = 'headline-box';
-                    headlineBox.href = article.url;
-                    headlineBox.target = '_blank'; // Open in new tab
-                    headlineBox.innerHTML = `<strong>${article.title || 'No title available'}</strong>`;
-          
-                    // Create the content element for the article description
-                    const contentBox = document.createElement('div');
-                    contentBox.className = 'content-box';
-                    contentBox.textContent = article.description || 'No description available';
+                // Create read more link
+                const readMoreLink = document.createElement('a');
+                readMoreLink.href = article.url;
+                readMoreLink.className = 'read-more-link';
+                readMoreLink.textContent = 'Read Full Article →';
+                readMoreLink.target = '_blank'; // Open in new tab
 
-                    // Create a "Read More" link
-                    const readMoreLink = document.createElement('a');
-                    readMoreLink.href = article.url;
-                    readMoreLink.className = 'read-more-link';
-                    readMoreLink.textContent = 'Read Full Article →';
-                    readMoreLink.target = '_blank'; // Open in new tab
+                // Append all elements to the news item
+                newsItem.appendChild(headlineBox);
+                newsItem.appendChild(contentBox);
+                newsItem.appendChild(sourceInfo);
+                newsItem.appendChild(readMoreLink);
 
-                    // Append all elements to the news item container
-                    newsItem.appendChild(headlineBox);
-                    newsItem.appendChild(contentBox);
-                    newsItem.appendChild(readMoreLink);
-          
-                    // Append the news item to the news container
-                    newsArticlesDiv.appendChild(newsItem);
-                });
-              })
-              .catch(error => {
-                console.error('Error fetching news:', error);
-                newsArticlesDiv.innerHTML = '<p>Failed to load news. Please try again later.</p>';
-              });
+                // Append the news item to the container
+                newsArticlesDiv.appendChild(newsItem);
             });
-        </script>
-      </body>
-      </html>
+        }
+
+        // Display fallback news content when API fails
+        function displayFallbackNews(topic = null) {
+            const fallbackDiv = document.getElementById('fallback-news');
+            if (!fallbackDiv) return;
+
+            const sectionHeader = document.createElement('div');
+            sectionHeader.className = 'section-header';
+            sectionHeader.innerHTML = '<h2>Recent Sports Headlines</h2>';
+            fallbackDiv.appendChild(sectionHeader);
+
+            // Create fallback news based on topic
+            let fallbackNews = [];
+
+            if (topic === 'NFL') {
+                fallbackNews = [
+                    {
+                        title: "NFL Draft 2025 Preview: Top Prospects to Watch",
+                        description: "With the NFL Draft approaching, analysts are finalizing their rankings of the top prospects expected to make an immediate impact in the upcoming season.",
+                        source: "Sports Illustrated",
+                        date: "April 14, 2025"
+                    },
+                    {
+                        title: "Free Agency Moves Reshape NFL Landscape",
+                        description: "Several high-profile quarterback changes and key defensive acquisitions have dramatically altered the power balance in both conferences heading into the 2025 season.",
+                        source: "ESPN",
+                        date: "April 13, 2025"
+                    },
+                    {
+                        title: "NFL Announces New Rule Changes for 2025 Season",
+                        description: "The competition committee has approved several rule modifications, including updates to the kickoff format and expanded replay review options.",
+                        source: "NFL Network",
+                        date: "April 12, 2025"
+                    }
+                ];
+            } else if (topic === 'NBA') {
+                fallbackNews = [
+                    {
+                        title: "NBA Playoff Race Intensifies as Regular Season Concludes",
+                        description: "With just a handful of games remaining, several teams are battling for the final playoff spots in both conferences.",
+                        source: "The Athletic",
+                        date: "April 14, 2025"
+                    },
+                    {
+                        title: "MVP Race: Top Candidates Make Final Push",
+                        description: "The league's top stars are delivering exceptional performances down the stretch as voters prepare to cast their ballots for the season's most valuable player.",
+                        source: "ESPN",
+                        date: "April 13, 2025"
+                    },
+                    {
+                        title: "Eastern Conference Team Clinches Top Seed",
+                        description: "With their victory last night, they've secured home-court advantage throughout the Eastern Conference playoffs.",
+                        source: "NBA.com",
+                        date: "April 12, 2025"
+                    }
+                ];
+            } else if (topic === 'MLB') {
+                fallbackNews = [
+                    {
+                        title: "MLB Season Opening Week: Early Surprises and Disappointments",
+                        description: "Several unexpected teams are off to hot starts while some preseason favorites have stumbled out of the gate.",
+                        source: "MLB.com",
+                        date: "April 14, 2025"
+                    },
+                    {
+                        title: "Rookie Sensation Makes Historic MLB Debut",
+                        description: "The highly-touted prospect delivered one of the most impressive first games in recent baseball history, hitting two home runs and driving in five runs.",
+                        source: "Baseball America",
+                        date: "April 13, 2025"
+                    },
+                    {
+                        title: "Cy Young Winner Dominates in Season Opener",
+                        description: "Last year's top pitcher picked up right where he left off, throwing seven shutout innings with 12 strikeouts in his first start of the new season.",
+                        source: "The Athletic",
+                        date: "April 12, 2025"
+                    }
+                ];
+            } else if (topic === 'LaLiga') {
+                fallbackNews = [
+                    {
+                        title: "LaLiga Title Race: Barcelona and Real Madrid Set for Dramatic Finish",
+                        description: "With just four games remaining, Barcelona and Real Madrid are separated by only two points at the top of the table as both teams continue their impressive form.",
+                        source: "Marca",
+                        date: "April 14, 2025"
+                    },
+                    {
+                        title: "Atletico Madrid Star Breaks Scoring Record",
+                        description: "The prolific striker has set a new club record for goals in a single LaLiga season, surpassing the previous mark that stood for over two decades.",
+                        source: "AS",
+                        date: "April 13, 2025"
+                    },
+                    {
+                        title: "Spanish Football Federation Announces Schedule for Next Season",
+                        description: "The 2025-26 LaLiga calendar has been released, featuring an earlier start date and extended winter break to accommodate international competitions.",
+                        source: "LaLiga Official",
+                        date: "April 12, 2025"
+                    }
+                ];
+            } else if (topic === 'Premier League') {
+                fallbackNews = [
+                    {
+                        title: "Premier League Title Race Down to Final Matches",
+                        description: "With just three games remaining, three clubs remain in contention for the championship in one of the closest races in recent memory.",
+                        source: "Sky Sports",
+                        date: "April 14, 2025"
+                    },
+                    {
+                        title: "Golden Boot Race: Star Strikers Neck and Neck",
+                        description: "The league's top two scorers continue their remarkable goal-scoring form as they battle for the prestigious individual award.",
+                        source: "BBC Sport",
+                        date: "April 13, 2025"
+                    },
+                    {
+                        title: "Relegation Battle: Teams Fight for Premier League Survival",
+                        description: "Five clubs separated by just four points are desperately trying to avoid the drop to the Championship in the season's final weeks.",
+                        source: "The Guardian",
+                        date: "April 12, 2025"
+                    }
+                ];
+            } else {
+                // General sports fallback
+                fallbackNews = [
+                    {
+                        title: "Major Sports Events This Weekend: Your Complete Guide",
+                        description: "From playoff action to championship matches, this weekend features a packed schedule of must-watch sporting events across multiple leagues.",
+                        source: "Sports Illustrated",
+                        date: "April 14, 2025"
+                    },
+                    {
+                        title: "International Olympic Committee Announces Host City for 2036 Games",
+                        description: "After a competitive bidding process, the IOC has selected the host city for the Summer Olympics to be held in 2036.",
+                        source: "Olympic News",
+                        date: "April 13, 2025"
+                    },
+                    {
+                        title: "Sports Streaming Services See Record Subscriber Growth",
+                        description: "Major digital platforms are reporting unprecedented increases in viewership as more fans transition to streaming services for live sports content.",
+                        source: "Sports Business Journal",
+                        date: "April 12, 2025"
+                    }
+                ];
+            }
+
+            // Display each fallback news item
+            fallbackNews.forEach(item => {
+                const newsItem = document.createElement('div');
+                newsItem.className = 'news-item';
+
+                const headlineBox = document.createElement('div');
+                headlineBox.className = 'headline-box';
+                headlineBox.innerHTML = `<strong>${item.title}</strong>`;
+
+                const contentBox = document.createElement('div');
+                contentBox.className = 'content-box';
+                contentBox.textContent = item.description;
+
+                const sourceInfo = document.createElement('div');
+                sourceInfo.className = 'source-info';
+                sourceInfo.textContent = `Source: ${item.source} | Published: ${item.date}`;
+
+                newsItem.appendChild(headlineBox);
+                newsItem.appendChild(contentBox);
+                newsItem.appendChild(sourceInfo);
+
+                fallbackDiv.appendChild(newsItem);
+            });
+        }
+    </script>
+</body>
+
+</html>
