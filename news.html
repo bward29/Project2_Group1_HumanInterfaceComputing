@@ -52,7 +52,7 @@
                     <button onclick="searchNews('Premier League')" class="api-button">Premier League</button>
                 </div>
                 <div class="news-articles" id="news-articles">
-                    <p class="loading-text">Loading sports news...</p>
+                    <!-- News content will load here -->
                 </div>
             </div>
         </main>
@@ -118,15 +118,8 @@
                 displayNews(data);
             } catch (error) {
                 console.error('Error fetching news:', error);
-                newsArticlesDiv.innerHTML = `
-                        <div class="error-message">
-                            <p>Sorry, we couldn't load the latest sports news. Error: ${error.message}</p>
-                            <p>This could be due to API rate limits or network issues.</p>
-                        </div>
-                        <div id="fallback-news"></div>
-                    `;
 
-                // Display fallback content
+                // Display fallback news instead of error message
                 displayFallbackNews();
             }
         }
@@ -157,15 +150,8 @@
                 displayNews(data, keyword);
             } catch (error) {
                 console.error('Error searching news:', error);
-                newsArticlesDiv.innerHTML = `
-                        <div class="error-message">
-                            <p>Sorry, we couldn't search for ${keyword} news. Error: ${error.message}</p>
-                            <p>This could be due to API rate limits or network issues.</p>
-                        </div>
-                        <div id="fallback-news"></div>
-                    `;
 
-                // Display fallback content
+                // Display fallback news instead of error message
                 displayFallbackNews(keyword);
             }
         }
@@ -252,13 +238,22 @@
 
         // Display fallback news content when API fails
         function displayFallbackNews(topic = null) {
-            const fallbackDiv = document.getElementById('fallback-news');
-            if (!fallbackDiv) return;
+            const newsArticlesDiv = document.getElementById('news-articles');
+            if (!newsArticlesDiv) return;
+
+            // Clear any existing content
+            newsArticlesDiv.innerHTML = '';
 
             const sectionHeader = document.createElement('div');
             sectionHeader.className = 'section-header';
-            sectionHeader.innerHTML = '<h2>Recent Sports Headlines</h2>';
-            fallbackDiv.appendChild(sectionHeader);
+
+            if (topic) {
+                sectionHeader.innerHTML = `<h2>${topic} News</h2>`;
+            } else {
+                sectionHeader.innerHTML = '<h2>Latest Sports News</h2>';
+            }
+
+            newsArticlesDiv.appendChild(sectionHeader);
 
             // Create fallback news based on topic
             let fallbackNews = [];
@@ -409,11 +404,17 @@
                 sourceInfo.className = 'source-info';
                 sourceInfo.textContent = `Source: ${item.source} | Published: ${item.date}`;
 
+                const readMoreLink = document.createElement('a');
+                readMoreLink.href = "#";
+                readMoreLink.className = 'read-more-link';
+                readMoreLink.textContent = 'Read Full Article →';
+
                 newsItem.appendChild(headlineBox);
                 newsItem.appendChild(contentBox);
                 newsItem.appendChild(sourceInfo);
+                newsItem.appendChild(readMoreLink);
 
-                fallbackDiv.appendChild(newsItem);
+                newsArticlesDiv.appendChild(newsItem);
             });
         }
     </script>
