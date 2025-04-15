@@ -226,8 +226,8 @@ header {
   position: absolute;
   top: 20px;
   right: 20px;
+  text-align: right;
   font-size: 14px;
-  text-align: center;
   font-weight: normal;
   line-height: 1.5;
   width: 100px;
@@ -236,7 +236,7 @@ header {
 .loading-indicator {
   position: absolute;
   top: 80px;
-  right: 60px;
+  right: 38px;
   display: flex;
   justify-content: center;
 }
@@ -331,16 +331,15 @@ header {
 
 /* Additional styles for the news page */
 .api-button {
-  padding: 8px 15px;
-  margin: 5px;
+  padding: 5px 10px;
+  margin: 0 2px;
   background-color: #4a90e2;
   color: white;
-  border: 1px solid #2c6cb8;
-  border-radius: 4px;
+  border: 1px solid #2571c7;
   cursor: pointer;
-  transition: background-color 0.3s;
   font-size: 14px;
   font-weight: normal;
+  text-decoration: none;
 }
 
 .api-button:hover {
@@ -349,15 +348,13 @@ header {
 
 .api-button.active {
   background-color: #2c6cb8;
-  font-weight: bold;
 }
 
 .api-selector {
-  margin: 20px 0;
+  margin: 15px 0;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 5px;
+  gap: 0;
 }
 
 .source-info {

@@ -44,12 +44,14 @@
             <div class="news-page">
                 <div class="news-section-title">Sports News</div>
                 <div class="api-selector">
-                    <button onclick="loadNews('us', 'sports')" class="api-button active">US Sports</button>
-                    <button onclick="searchNews('NFL')" class="api-button">NFL</button>
-                    <button onclick="searchNews('NBA')" class="api-button">NBA</button>
-                    <button onclick="searchNews('MLB')" class="api-button">MLB</button>
-                    <button onclick="searchNews('LaLiga')" class="api-button">LaLiga</button>
-                    <button onclick="searchNews('Premier League')" class="api-button">Premier League</button>
+                    <a href="#" onclick="loadNews('us', 'sports'); return false;" class="api-button active">US
+                        Sports</a>
+                    <a href="#" onclick="searchNews('NFL'); return false;" class="api-button">NFL</a>
+                    <a href="#" onclick="searchNews('NBA'); return false;" class="api-button">NBA</a>
+                    <a href="#" onclick="searchNews('MLB'); return false;" class="api-button">MLB</a>
+                    <a href="#" onclick="searchNews('LaLiga'); return false;" class="api-button">LaLiga</a>
+                    <a href="#" onclick="searchNews('Premier League'); return false;" class="api-button">Premier
+                        League</a>
                 </div>
                 <div class="news-articles" id="news-articles">
                     <!-- News content will load here -->
