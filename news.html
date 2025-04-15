@@ -58,15 +58,15 @@
         <!-- API Integration Script -->
         <script>
             document.addEventListener('DOMContentLoaded', () => {
-              // Replace with your actual API endpoint and API key
-              const apiUrl = 'https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=e82b2543fcf74b63ad167b9e0ef36153';
-              const apiKey = 'Insert API Key Here';
+              // API endpoint with the new API key
+              const apiKey = 'c1347ffd8d7b44909ea09db3791cf1a6';
+              const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&category=sports&apiKey=${apiKey}`;
 
               const newsArticlesDiv = document.getElementById('news-articles');
               newsArticlesDiv.innerHTML = '<p>Loading news...</p>';
           
               fetch(apiUrl, {
-                  method: 'GET',
+                  method: 'GET'
               })
               .then(response => {
                 if (!response.ok) {
@@ -78,25 +78,47 @@
                 // Clear placeholder content
                 newsArticlesDiv.innerHTML = '';
 
-                // Define keywords && blacklist to filter articles
-                const keywords = ['NFL', 'NBA', 'MLB', 'Soccer'];
-                const blacklist = ['NCAA', 'NHL'];
+                // Define keywords and blacklist to filter articles
+                const keywords = ['NFL', 'NBA', 'MLB', 'Soccer', 'football', 'basketball', 'baseball'];
+                const blacklist = ['NCAA', 'NHL', 'college'];
 
-                // Filter articles that contain any of the keywords in the title or description
+                // Filter articles that contain any of the keywords but none from the blacklist
                 const filteredArticles = data.articles.filter(article => {
-                    return keywords.some(keyword => 
-                    article.title.toLowerCase().includes(keyword.toLowerCase()) ||
-                    (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
+                    // Check if title or description contains any keyword
+                    const hasKeyword = keywords.some(keyword => 
+                        (article.title && article.title.toLowerCase().includes(keyword.toLowerCase())) ||
+                        (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
                     );
+                    
+                    // Check if title or description contains any blacklisted word
+                    const hasBlacklisted = blacklist.some(keyword => 
+                        (article.title && article.title.toLowerCase().includes(keyword.toLowerCase())) ||
+                        (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
+                    );
+                    
+                    // Only return articles with keywords and without blacklisted terms
+                    return hasKeyword && !hasBlacklisted;
                 });
           
-                //Limit to the top 4 articles
-                const topArticles = data.articles.slice(0, 4).filter(article => {
-                    return !blacklist.some(keyword => 
-                    article.title.toLowerCase().includes(keyword.toLowerCase()) ||
-                    (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
-                    );
-                });
+                // If no filtered articles, use top 4 articles without blacklisted terms
+                let displayArticles = filteredArticles;
+                
+                if (filteredArticles.length === 0) {
+                    displayArticles = data.articles.filter(article => {
+                        return !blacklist.some(keyword => 
+                            (article.title && article.title.toLowerCase().includes(keyword.toLowerCase())) ||
+                            (article.description && article.description.toLowerCase().includes(keyword.toLowerCase()))
+                        );
+                    });
+                }
+                
+                // Limit to the top 4 articles
+                const topArticles = displayArticles.slice(0, 4);
+
+                if (topArticles.length === 0) {
+                    newsArticlesDiv.innerHTML = '<p>No sports news articles available at the moment.</p>';
+                    return;
+                }
 
                 // Loop through the articles and create elements for each
                 topArticles.forEach(article => {
@@ -104,40 +126,39 @@
                     const newsItem = document.createElement('div');
                     newsItem.className = 'news-item';
           
-                    // Create a link element (e.g., for the full article)
-                    const link = document.createElement('a');
-                    link.href = article.url;
-                    link.className = 'link-text';
-                    link.textContent = 'link';
-          
                     // Create the headline element
                     const headlineBox = document.createElement('a');
                     headlineBox.className = 'headline-box';
                     headlineBox.href = article.url;
-                    headlineBox.innerHTML = `<strong>${article.title}</strong>`;
+                    headlineBox.target = '_blank'; // Open in new tab
+                    headlineBox.innerHTML = `<strong>${article.title || 'No title available'}</strong>`;
           
                     // Create the content element for the article description
                     const contentBox = document.createElement('div');
                     contentBox.className = 'content-box';
-                    contentBox.textContent = article.description;
+                    contentBox.textContent = article.description || 'No description available';
+
+                    // Create a "Read More" link
+                    const readMoreLink = document.createElement('a');
+                    readMoreLink.href = article.url;
+                    readMoreLink.className = 'read-more-link';
+                    readMoreLink.textContent = 'Read Full Article →';
+                    readMoreLink.target = '_blank'; // Open in new tab
 
                     // Append all elements to the news item container
                     newsItem.appendChild(headlineBox);
                     newsItem.appendChild(contentBox);
-
+                    newsItem.appendChild(readMoreLink);
           
                     // Append the news item to the news container
                     newsArticlesDiv.appendChild(newsItem);
-                  });
-                  });
-                if (topArticles.length === 0) {
-                    newsArticlesDiv.innerHTML = '<p>No news articles available.</p>';
-                }
+                });
               })
               .catch(error => {
                 console.error('Error fetching news:', error);
-                newsArticlesDiv.innerHTML = '<p>Failed to load news.</p>';
+                newsArticlesDiv.innerHTML = '<p>Failed to load news. Please try again later.</p>';
               });
-          </script>
+            });
+        </script>
       </body>
       </html>
